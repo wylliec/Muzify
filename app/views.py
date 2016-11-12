@@ -6,17 +6,19 @@ import json
 @app.route('/')
 @app.route('/index')
 def index():
-    return "Hello, World!"
+    text = analyze_tone(speech_text())
+    str_json = json.dumps(text, indent=2)
+    return render_template('pre.html', text=str_json)
 
 @app.route('/tone')
 def tone():
     text = 'eecs for lyfe yo'
     tone = analyze_tone(text)
     str_json = json.dumps(tone, indent=2)
-    return render_template('tone.html', text=str_json)
+    return render_template('pre.html', text=str_json)
 
 @app.route('/speech')
 def speech():
     text = speech_text()
     str_json = json.dumps(text, indent=2)
-    return render_template('tone.html', text=str_json)
+    return render_template('pre.html', text=str_json)
