@@ -23,3 +23,11 @@ def speech():
     text = speech_text()
     str_json = json.dumps(text, indent=2)
     return render_template('pre.html', text=str_json)
+
+@app.route('/record')
+def record():
+    return render_template('exampleRecording.html')
+
+@app.route('/upload')
+def upload():
+    return render_template('exampleRecording.html')
