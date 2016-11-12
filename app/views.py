@@ -6,6 +6,10 @@ import json
 @app.route('/')
 @app.route('/index')
 def index():
+    return render_template('index.html')
+
+@app.route('/speech-to-tone')
+def speech_to_tone():
     text = analyze_tone(speech_text())
     str_json = json.dumps(text, indent=2)
     return render_template('pre.html', text=str_json)
