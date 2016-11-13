@@ -9,13 +9,12 @@ def combine_waves(wav1, wav2, out_file):
     #print(numpy.shape(signal1))
     #print(numpy.shape(signal2))
     combined_signal = numpy.concatenate((signal1, signal2))
-    return scipy.io.wavfile.write(out_file, rate2, combined_signal)
+    return cut_off(rate2, combined_signal, out_file)
 
 def read_wav(filename):
     return scipy.io.wavfile.read(filename)
 
-def cut_off(wav, out_file):
-    rate, signal = read_wav(wav)
+def cut_off(rate, signal, out_file):
     length, inputs = numpy.shape(signal)
     time  = length / rate
     if time > 15:
