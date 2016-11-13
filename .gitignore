@@ -1,4 +1,8 @@
 app/tokens.py
+.cache-spotify
+.DS_Store
+*.DS_Store
+*.swp
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
