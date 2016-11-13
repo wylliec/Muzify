@@ -31,6 +31,7 @@
   }
   var audio_context;
   var recorder;
+  var timer;
   function startUserMedia(stream) {
     var input = audio_context.createMediaStreamSource(stream);
     __log('Media stream created.');
@@ -45,17 +46,19 @@
     recorder && recorder.record();
     button.disabled = true;
     button.nextElementSibling.disabled = false;
+    timer = setTimeout(uploadBlob, 3000);
     __log('Recording...');
   }
   function stopRecording(button) {
     recorder && recorder.stop();
     button.disabled = true;
     button.previousElementSibling.disabled = false;
+    clearTimeout(timer);
     __log('Stopped recording.');
     
     // create WAV download link using audio data blob
     //createDownloadLink();
-    uploadBlob();
+    //uploadBlob();
 
     recorder.clear();
   }
@@ -75,6 +78,8 @@
              console.log(data);
       });
     });
+    recorder && recorder.clear();
+    timer = setTimeout(uploadBlob, 3000);
   }
 
 
