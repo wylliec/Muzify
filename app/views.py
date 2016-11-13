@@ -41,3 +41,10 @@ def upload():
     new_wav = read_wav(wav_upload)
     combine_waves(old_wav, new_wav, 'app/static/record.wav')
     return 'successful upload'
+
+@app.route('/upload', methods=['DELETE'])
+def delete():
+    overwrite = open('app/static/empty.wav', 'rb')
+    delet_this = open('app/static/record.wav', 'wb')
+    delet_this.write(overwrite.read())
+    return 'successful deletion'

@@ -34,6 +34,16 @@ function stopRecording(button) {
 
   recorder.clear();
 }
+function resetRecording(button) {
+  $.ajax({
+      type: 'DELETE',
+      url: '/upload',
+      processData: false,
+      contentType: false
+  }).done(function(data) {
+      console.log(data);
+  });
+}
 
 function uploadBlob() {
   recorder && recorder.exportWAV(function(blob) {
