@@ -11,29 +11,29 @@ import json
 def index():
     return render_template('index.html')
 
-@app.route('/speech-to-tone')
-def speech_to_tone():
-    text = analyze_tone(speech_text())
-    sentiments = str(get_sentiments(text))
-    str_sentiments = str(sentiments) 
-    return render_template('pre.html', text=sentiments)
+# #@app.route('/speech-to-tone')
+# def speech_to_tone():
+#     text = analyze_tone(speech_text())
+#     sentiments = str(get_sentiments(text))
+#     str_sentiments = str(sentiments) 
+#     return render_template('pre.html', text=sentiments)
 
-@app.route('/tone')
-def tone():
-    text = 'eecs for lyfe yo'
-    tone = analyze_tone(text)
-    str_json = json.dumps(tone, indent=2)
-    return render_template('pre.html', text=str_json)
+# #@app.route('/tone')
+# def tone():
+#     text = 'eecs for lyfe yo'
+#     tone = analyze_tone(text)
+#     str_json = json.dumps(tone, indent=2)
+#     return render_template('pre.html', text=str_json)
 
-@app.route('/speech')
-def speech():
-    text = speech_text()
-    str_json = json.dumps(text, indent=2)
-    return render_template('pre.html', text=str_json)
+# #@app.route('/speech')
+# def speech():
+#     text = speech_text()
+#     str_json = json.dumps(text, indent=2)
+#     return render_template('pre.html', text=str_json)
 
-@app.route('/record')
-def record():
-    return render_template('exampleRecording.html')
+# #@app.route('/record')
+# def record():
+#     return render_template('exampleRecording.html')
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -47,6 +47,8 @@ def upload():
     new_wav = read_wav(wav_upload)
     combine_waves(old_wav, new_wav, 'app/static/record.wav')
     text = speech_text()
+    if text == "":
+        return None
     sentiments = get_sentiments(analyze_tone(text))
     d = {}
     d['text'] = text

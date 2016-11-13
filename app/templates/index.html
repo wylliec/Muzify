@@ -2,7 +2,18 @@
 {% block content %}
     <div class="row">
         <div class="col-sm-12">
-            <button type="button" class="btn btn-default">Start Recording</button>
+            <button type="button" class="btn btn-default" onclick="startRecording(this);">record</button>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <b id="mood"></b>
+                    <span id="text"></span></div>
+            </div>
         </div>
     </div>
+    <script src="/static/uploader.js"></script>
+    <script src="/static/recorder.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
 {% endblock %}

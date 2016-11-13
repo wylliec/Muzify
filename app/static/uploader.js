@@ -1,5 +1,6 @@
 function __log(e, data) {
-  log.innerHTML += "\n" + e + " " + (data || '');
+  //log.innerHTML += "\n" + e + " " + (data || '');
+  console.log("\n" + e + " " + (data || ''));
 }
 var audio_context;
 var recorder;
@@ -24,16 +25,17 @@ function startUserMedia(stream) {
   __log('Recorder initialised.');
 }
 function startRecording(button) {
+  resetRecording(button)
   recorder && recorder.record();
   button.disabled = true;
-  button.nextElementSibling.disabled = false;
+  //button.nextElementSibling.disabled = false;
   timer = setTimeout(uploadBlob, 3000);
   __log('Recording...');
 }
 function stopRecording(button) {
   recorder && recorder.stop();
   button.disabled = true;
-  button.previousElementSibling.disabled = false;
+  //button.previousElementSibling.disabled = false;
   clearTimeout(timer);
   __log('Stopped recording.');
   
@@ -77,6 +79,8 @@ function uploadBlob() {
               songs.push(data['preview_url']);
             }
           }
+          document.getElementById('mood').innerHTML = mood
+          document.getElementById('text').innerHTML = data['text']
     });
   });
   recorder && recorder.clear();
@@ -85,23 +89,23 @@ function uploadBlob() {
 
 
 
-function createDownloadLink() {
-  recorder && recorder.exportWAV(function(blob) {
-    var url = URL.createObjectURL(blob);
-    var li = document.createElement('li');
-    var au = document.createElement('audio');
-    var hf = document.createElement('a');
+// function createDownloadLink() {
+//   recorder && recorder.exportWAV(function(blob) {
+//     var url = URL.createObjectURL(blob);
+//     var li = document.createElement('li');
+//     var au = document.createElement('audio');
+//     var hf = document.createElement('a');
     
-    au.controls = true;
-    au.src = url;
-    hf.href = url;
-    hf.download = new Date().toISOString() + '.wav';
-    hf.innerHTML = hf.download;
-    li.appendChild(au);
-    li.appendChild(hf);
-    recordingslist.appendChild(li);
-  });
-}
+//     au.controls = true;
+//     au.src = url;
+//     hf.href = url;
+//     hf.download = new Date().toISOString() + '.wav';
+//     hf.innerHTML = hf.download;
+//     li.appendChild(au);
+//     li.appendChild(hf);
+//     recordingslist.appendChild(li);
+//   });
+// }
 
 
 
