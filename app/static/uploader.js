@@ -14,6 +14,13 @@ audio.addEventListener('ended', function(){
     audio.play();
   }
 }, false);
+var bgColors = {
+  'Joy'     : 'yellow',
+  'Fear'    : 'black',
+  'Sadness' : 'blue',
+  'Anger'   : 'red',
+  'Disgust' : 'green',
+};
 function startUserMedia(stream) {
   var input = audio_context.createMediaStreamSource(stream);
   __log('Media stream created.');
@@ -79,8 +86,9 @@ function uploadBlob() {
               songs.push(data['preview_url']);
             }
           }
-          document.getElementById('mood').innerHTML = mood
-          document.getElementById('text').innerHTML = data['text']
+          document.getElementById('mood').innerHTML = mood;
+          document.getElementById('text').innerHTML = data['text'];
+          document.body.style.background = bgColors[mood];
     });
   });
   recorder && recorder.clear();
