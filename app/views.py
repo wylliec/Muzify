@@ -36,7 +36,8 @@ def upload():
     wav_upload = request.files['data']
     print(wav_fname)
     print(wav_upload)
-    old_wav = read_wav('app/static/speech.wav')
+    #wav_upload.save('app/static/record.wav')
+    old_wav = read_wav('app/static/record.wav')
     new_wav = read_wav(wav_upload)
-    combine_waves(old_wav, new_wav, 'app/static/speech.wav')
+    combine_waves(old_wav, new_wav, 'app/static/record.wav')
     return 'successful upload'

@@ -8,8 +8,9 @@ def combine_waves(wav1, wav2, out_file):
     rate2, signal2 = wav2
     print(numpy.shape(signal1))
     print(numpy.shape(signal2))
+    print(rate2)
     combined_signal = numpy.concatenate((signal1, signal2))
-    return scipy.io.wavfile.write(out_file, rate1, combined_signal)
+    return scipy.io.wavfile.write(out_file, rate2, combined_signal)
 
 def read_wav(filename):
     return scipy.io.wavfile.read(filename)
