@@ -42,8 +42,10 @@ def upload():
     old_wav = read_wav('app/static/record.wav')
     new_wav = read_wav(wav_upload)
     combine_waves(old_wav, new_wav, 'app/static/record.wav')
-    sentiments = get_sentiments(analyze_tone(speech_text()))
+    text = speech_text()
+    sentiments = get_sentiments(analyze_tone(text))
     d = {}
+    d['text'] = text
     d['mood'] = get_max_emotion(sentiments)
     d['preview_url'] = play_song(d['mood'])
     return jsonify(**d)

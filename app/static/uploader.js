@@ -4,8 +4,15 @@ function __log(e, data) {
 var audio_context;
 var recorder;
 var timer;
-var mood;
+var mood = 'Joy';
+var songs = [];
 var audio = new Audio();
+audio.addEventListener('ended', function(){
+  if(songs.length > 0) {
+    audio.src = songs.pop();
+    audio.play();
+  }
+}, false);
 function startUserMedia(stream) {
   var input = audio_context.createMediaStreamSource(stream);
   __log('Media stream created.');
@@ -61,9 +68,14 @@ function uploadBlob() {
     }).done(function(data) {
           console.log(data);
           if(mood !== data['mood']) {
-            mood = data['mood']
+            songs = [];
+            mood = data['mood'];
             audio.src = data['preview_url'];
             audio.play();
+          } else {
+            if(songs.indexOf(data['preview_url']) < 0) {
+              songs.push(data['preview_url']);
+            }
           }
     });
   });
