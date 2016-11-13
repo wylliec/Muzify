@@ -1,6 +1,7 @@
-from flask import render_template
+from flask import render_template, request
 from app import app
 from app.watson import analyze_tone, get_sentiments, speech_text 
+from app.wav_combine import combine_waves, read_wav
 import json
 
 @app.route('/')
@@ -28,6 +29,14 @@ def speech():
 def record():
     return render_template('exampleRecording.html')
 
-@app.route('/upload')
+@app.route('/upload', methods=['POST'])
 def upload():
-    return render_template('exampleRecording.html')
+    print('i got it')
+    wav_fname = request.form['fname']
+    wav_upload = request.files['data']
+    print(wav_fname)
+    print(wav_upload)
+    old_wav = read_wav('app/static/speech.wav')
+    new_wav = read_wav(wav_upload)
+    combine_waves(old_wav, new_wav, 'app/static/speech.wav')
+    return 'successful upload'
