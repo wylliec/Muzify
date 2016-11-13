@@ -1,7 +1,9 @@
-from flask import render_template, request
+from flask import render_template, request, jsonify
 from app import app
 from app.watson import analyze_tone, get_sentiments, speech_text 
 from app.wav_combine import combine_waves, read_wav
+from app.playlists import play_song
+from app.mood_analysis import get_max_emotion
 import json
 
 @app.route('/')
@@ -31,16 +33,20 @@ def record():
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    print('i got it')
+    #print('i got it')
     wav_fname = request.form['fname']
     wav_upload = request.files['data']
-    print(wav_fname)
-    print(wav_upload)
+    #print(wav_fname)
+    #print(wav_upload)
     #wav_upload.save('app/static/record.wav')
     old_wav = read_wav('app/static/record.wav')
     new_wav = read_wav(wav_upload)
     combine_waves(old_wav, new_wav, 'app/static/record.wav')
-    return 'successful upload'
+    sentiments = get_sentiments(analyze_tone(speech_text()))
+    d = {}
+    d['mood'] = get_max_emotion(sentiments)
+    d['preview_url'] = play_song(d['mood'])
+    return jsonify(**d)
 
 @app.route('/upload', methods=['DELETE'])
 def delete():

@@ -1,4 +1,4 @@
-from watson import get_sentiments
+from app.watson import get_sentiments
 
 #Gets the score of a specific emotion in the emotion dictionary
 def get_score(emotion, emotion_dict):

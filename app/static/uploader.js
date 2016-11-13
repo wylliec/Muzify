@@ -4,6 +4,8 @@ function __log(e, data) {
 var audio_context;
 var recorder;
 var timer;
+var mood;
+var audio = new Audio();
 function startUserMedia(stream) {
   var input = audio_context.createMediaStreamSource(stream);
   __log('Media stream created.');
@@ -57,7 +59,12 @@ function uploadBlob() {
         processData: false,
         contentType: false
     }).done(function(data) {
-           console.log(data);
+          console.log(data);
+          if(mood !== data['mood']) {
+            mood = data['mood']
+            audio.src = data['preview_url'];
+            audio.play();
+          }
     });
   });
   recorder && recorder.clear();
@@ -83,6 +90,10 @@ function createDownloadLink() {
     recordingslist.appendChild(li);
   });
 }
+
+
+
+
 window.onload = function init() {
   try {
     // webkit shim
